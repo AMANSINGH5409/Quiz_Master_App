@@ -44,6 +44,11 @@ class _CreateQuizPageState extends State<CreateQuizPage> {
     }
   }
 
+  noImage() {
+    imgUrl = "no image";
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,10 +72,10 @@ class _CreateQuizPageState extends State<CreateQuizPage> {
                   children: [
                     TextFormField(
                       validator: (val) {
-                        return val!.isEmpty ? "Enter Image url" : null;
+                        return val!.isEmpty ? noImage() : null;
                       },
                       decoration: const InputDecoration(
-                        hintText: "Quiz Image url",
+                        hintText: "Quiz Image url (Optional)",
                       ),
                       onChanged: (val) {
                         imgUrl = val;
