@@ -86,7 +86,9 @@ class _SignInPageState extends State<SignInPage> {
                     const SizedBox(height: 6.0),
                     TextFormField(
                       validator: (value) {
-                        return value!.isEmpty ? "Enter Password!" : null;
+                        return (value!.isEmpty || value.length < 6)
+                            ? "Enter Valid Password! (Min of 6 characters)"
+                            : null;
                       },
                       obscureText: true,
                       decoration: const InputDecoration(

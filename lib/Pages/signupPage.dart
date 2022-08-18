@@ -17,6 +17,7 @@ class SignUpPage extends StatefulWidget {
 class _SignUpPageState extends State<SignUpPage> {
   final _formKey = GlobalKey<FormState>();
   String email = "", password = "", name = "";
+  RegExp regExp = RegExp(r'[a-z0-9]+@[a-z]+\.[a-z]{2,3}');
   bool isLoading = false;
 
   AuthServices authServices = AuthServices();
@@ -62,10 +63,12 @@ class _SignUpPageState extends State<SignUpPage> {
                     const Spacer(),
                     TextFormField(
                       validator: (value) {
-                        return value!.isEmpty ? "Enter Name" : null;
+                        return (value!.isEmpty || value.length < 4)
+                            ? "Enter Valid Username! (Min of 4 characters)"
+                            : null;
                       },
                       decoration: const InputDecoration(
-                        hintText: "Name",
+                        hintText: "Username",
                       ),
                       onChanged: (val) {
                         name = val;
@@ -74,7 +77,11 @@ class _SignUpPageState extends State<SignUpPage> {
                     const SizedBox(height: 6.0),
                     TextFormField(
                         validator: (value) {
-                          return value!.isEmpty ? "Enter EmailID" : null;
+                          return value!.isNotEmpty
+                              ? !regExp.hasMatch(value.toString())
+                                  ? "Invalid EmailID!"
+                                  : null
+                              : "Enter EmailId!";
                         },
                         decoration: const InputDecoration(
                           hintText: "Email ID",
@@ -85,7 +92,9 @@ class _SignUpPageState extends State<SignUpPage> {
                     const SizedBox(height: 6.0),
                     TextFormField(
                       validator: (value) {
-                        return value!.isEmpty ? "Enter Password" : null;
+                        return (value!.isEmpty || value.length < 6)
+                            ? "Set Valid Password! (Min of 6 characters)"
+                            : null;
                       },
                       obscureText: true,
                       decoration: const InputDecoration(
